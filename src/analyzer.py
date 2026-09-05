@@ -85,7 +85,7 @@ Return exactly this JSON structure:
 
         def _do_call():
             client = get_client()
-            for m in ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]:
+            for m in ["gemini-3.6-flash", "gemini-flash-latest", "gemini-2.5-flash-lite"]:
                 try:
                     res = client.models.generate_content(model=m, contents=prompt)
                     if res and res.text:
@@ -96,7 +96,7 @@ Return exactly this JSON structure:
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
             future = executor.submit(_do_call)
-            return future.result(timeout=2.5)
+            return future.result(timeout=12.0)
     except Exception as e:
         verdict = "ATTENTION REQUIRED" if has_findings else "NO CONCERNS IDENTIFIED"
         risk_level = "HIGH" if has_findings else "NONE"
