@@ -5,6 +5,23 @@ import json
 def get_client():
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
+        for fname in [".env", ".env.example"]:
+            if os.path.exists(fname):
+                try:
+                    with open(fname, encoding="utf-8") as f:
+                        for line in f:
+                            if line.strip().startswith("GEMINI_API_KEY="):
+                                val = line.strip().split("=", 1)[1].strip('"').strip("'")
+                                if val and val != "your_gemini_api_key_here":
+                                    api_key = val
+                                    os.environ["GEMINI_API_KEY"] = val
+                                    break
+                except Exception:
+                    pass
+            if api_key:
+                break
+
+    if not api_key:
         raise ValueError("GEMINI_API_KEY environment variable not set")
     return genai.Client(api_key=api_key)
 
