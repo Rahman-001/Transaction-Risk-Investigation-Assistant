@@ -20,6 +20,17 @@ def row_to_dict(row):
     return {k: safe_val(v) for k, v in row.to_dict().items()}
 
 def check_all_rules(df, customer_id, profile):
+    """
+    Evaluates 5 deterministic banking risk rules against recent customer transactions (last 30 days)
+    compared to the established historical baseline period.
+
+    Rules evaluated:
+    - R01: Unusually Large Transfer (debit > 3x 6-month baseline avg)
+    - R02: New Payee Burst (>= 2 new payee transactions within 10 days)
+    - R03: Odd Hours Activity (debit transactions between 01:00 AM and 05:00 AM)
+    - R04: Pattern Break Amount (debit > 2x 90th percentile baseline)
+    - R05: New Channel Anomaly (first-time payment channel usage)
+    """
     rules = load_rules()
     cdf = df[df["customer_id"] == customer_id].copy().sort_values("date")
     
