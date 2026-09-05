@@ -1,0 +1,41 @@
+{
+  "version": "1.0",
+  "effective_date": "2024-01-01",
+  "rules": [
+    {
+      "id": "R01",
+      "name": "Unusually Large Transfer",
+      "description": "Single transaction debit amount exceeds 3x the customer's 6-month average debit",
+      "severity": "HIGH",
+      "action": "Flag for review — verify with customer if intentional"
+    },
+    {
+      "id": "R02",
+      "name": "New Payee Burst",
+      "description": "Two or more payments to a payee not seen in the prior 5 months of history, within 10 days",
+      "severity": "HIGH",
+      "action": "Escalate to investigator — potential account takeover or scam"
+    },
+    {
+      "id": "R03",
+      "name": "Odd Hours Activity",
+      "description": "Transaction initiated between 01:00 AM and 05:00 AM local time",
+      "severity": "MEDIUM",
+      "action": "Note in report — correlate with other flags"
+    },
+    {
+      "id": "R04",
+      "name": "Pattern Break — Amount",
+      "description": "Debit amount exceeds the customer's 90th percentile historical debit by more than 2x",
+      "severity": "HIGH",
+      "action": "Flag for review — check if customer initiated or authorised"
+    },
+    {
+      "id": "R05",
+      "name": "New Channel Anomaly",
+      "description": "Transaction via a payment channel not used by this customer in prior history",
+      "severity": "MEDIUM",
+      "action": "Note in report — may indicate device compromise or social engineering"
+    }
+  ]
+}
